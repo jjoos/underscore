@@ -942,11 +942,11 @@
     var proto = _.isFunction(constructor) && constructor.prototype || ObjProto;
 
     // Constructor is a special case.
-    var prop = 'constructor';
-    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
+    var constructorName = 'constructor';
+    if (_.has(obj, constructorName) && !_.contains(keys, constructorName)) keys.push(constructorName);
 
     while (nonEnumIdx--) {
-      prop = nonEnumerableProps[nonEnumIdx];
+      var prop = nonEnumerableProps[nonEnumIdx];
       if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
         keys.push(prop);
       }

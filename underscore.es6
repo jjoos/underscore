@@ -899,21 +899,21 @@
   // ----------------
 
   // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
-  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
-  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
+  const hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
+  const nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
                       'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
 
-  var collectNonEnumProps = function(obj, keys) {
-    var nonEnumIdx = nonEnumerableProps.length;
-    var constructor = obj.constructor;
-    var proto = _.isFunction(constructor) && constructor.prototype || ObjProto;
+  let collectNonEnumProps = function(obj, keys) {
+    let nonEnumIdx = nonEnumerableProps.length;
+    let constructor = obj.constructor;
+    let proto = _.isFunction(constructor) && constructor.prototype || ObjProto;
 
     // Constructor is a special case.
-    var prop = 'constructor';
-    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
+    let constructorName = 'constructor';
+    if (_.has(obj, constructorName) && !_.contains(keys, constructorName)) keys.push(constructorName);
 
     while (nonEnumIdx--) {
-      prop = nonEnumerableProps[nonEnumIdx];
+      let prop = nonEnumerableProps[nonEnumIdx];
       if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
         keys.push(prop);
       }
