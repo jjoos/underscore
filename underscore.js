@@ -797,20 +797,26 @@
   // as much as it can, without ever going more than once per `wait` duration;
   // but if you'd like to disable the execution on the leading edge, pass
   // `{leading: false}`. To disable execution on the trailing edge, ditto.
-  _.throttle = function (func, wait, options) {
+  _.throttle = function (func, wait) {
+    var _ref = arguments[2] === undefined ? {} : arguments[2];
+
+    var _ref$leading = _ref.leading;
+    var leading = _ref$leading === undefined ? true : _ref$leading;
+    var _ref$trailing = _ref.trailing;
+    var trailing = _ref$trailing === undefined ? true : _ref$trailing;
+
     var context, args, result;
     var timeout = null;
     var previous = 0;
-    if (!options) options = {};
     var later = function later() {
-      previous = options.leading === false ? 0 : _.now();
+      previous = leading === false ? 0 : _.now();
       timeout = null;
       result = func.apply(context, args);
       if (!timeout) context = args = null;
     };
     return function () {
       var now = _.now();
-      if (!previous && options.leading === false) previous = now;
+      if (!previous && leading === false) previous = now;
       var remaining = wait - (now - previous);
       context = this;
       args = arguments;
@@ -822,7 +828,7 @@
         previous = now;
         result = func.apply(context, args);
         if (!timeout) context = args = null;
-      } else if (!timeout && options.trailing !== false) {
+      } else if (!timeout && trailing !== false) {
         timeout = setTimeout(later, remaining);
       }
       return result;
