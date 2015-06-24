@@ -283,13 +283,17 @@
   };
 
   // Invoke a method (with arguments) on every item in a collection.
-  _.invoke = restArgs(function (obj, method, args) {
+  _.invoke = function (obj, method) {
+    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      args[_key - 2] = arguments[_key];
+    }
+
     var isFunc = _.isFunction(method);
     return _.map(obj, function (value) {
       var func = isFunc ? method : value[method];
       return func == null ? func : func.apply(value, args);
     });
-  });
+  };
 
   // Convenience version of a common use case of `map`: fetching a property.
   _.pluck = function (obj, key) {
