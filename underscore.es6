@@ -1204,10 +1204,9 @@
       length = keys.length;
       // Ensure that both objects contain the same number of properties before comparing deep equality.
       if (_.keys(b).length !== length) return false;
-      while (length--) {
-        // Deep compare each member
-        key = keys[length];
-        if (!(_.has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
+
+      for(var key of _.keys(b)) {
+        if(!(eq(a[key], b[key], aStack, bStack))) return false;
       }
     }
     // Remove the first object from the stack of traversed objects.
